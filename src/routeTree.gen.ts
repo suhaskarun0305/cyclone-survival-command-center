@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SosRouteImport } from './routes/sos'
+import { Route as SheltersRouteImport } from './routes/shelters'
 import { Route as IncidentsRouteImport } from './routes/incidents'
 import { Route as AiCommandRouteImport } from './routes/ai-command'
 import { Route as IndexRouteImport } from './routes/index'
@@ -17,6 +18,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const SosRoute = SosRouteImport.update({
   id: '/sos',
   path: '/sos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SheltersRoute = SheltersRouteImport.update({
+  id: '/shelters',
+  path: '/shelters',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IncidentsRoute = IncidentsRouteImport.update({
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai-command': typeof AiCommandRoute
   '/incidents': typeof IncidentsRoute
+  '/shelters': typeof SheltersRoute
   '/sos': typeof SosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai-command': typeof AiCommandRoute
   '/incidents': typeof IncidentsRoute
+  '/shelters': typeof SheltersRoute
   '/sos': typeof SosRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/ai-command': typeof AiCommandRoute
   '/incidents': typeof IncidentsRoute
+  '/shelters': typeof SheltersRoute
   '/sos': typeof SosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/ai-command' | '/incidents' | '/sos'
+  fullPaths: '/' | '/ai-command' | '/incidents' | '/shelters' | '/sos'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ai-command' | '/incidents' | '/sos'
-  id: '__root__' | '/' | '/ai-command' | '/incidents' | '/sos'
+  to: '/' | '/ai-command' | '/incidents' | '/shelters' | '/sos'
+  id: '__root__' | '/' | '/ai-command' | '/incidents' | '/shelters' | '/sos'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AiCommandRoute: typeof AiCommandRoute
   IncidentsRoute: typeof IncidentsRoute
+  SheltersRoute: typeof SheltersRoute
   SosRoute: typeof SosRoute
 }
 
@@ -76,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/sos'
       fullPath: '/sos'
       preLoaderRoute: typeof SosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shelters': {
+      id: '/shelters'
+      path: '/shelters'
+      fullPath: '/shelters'
+      preLoaderRoute: typeof SheltersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/incidents': {
@@ -106,6 +123,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AiCommandRoute: AiCommandRoute,
   IncidentsRoute: IncidentsRoute,
+  SheltersRoute: SheltersRoute,
   SosRoute: SosRoute,
 }
 export const routeTree = rootRouteImport
