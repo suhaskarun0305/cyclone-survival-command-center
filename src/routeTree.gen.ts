@@ -15,6 +15,7 @@ import { Route as SheltersRouteImport } from './routes/shelters'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as IncidentsRouteImport } from './routes/incidents'
+import { Route as AlertsRouteImport } from './routes/alerts'
 import { Route as AiCommandRouteImport } from './routes/ai-command'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -48,6 +49,11 @@ const IncidentsRoute = IncidentsRouteImport.update({
   path: '/incidents',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AlertsRoute = AlertsRouteImport.update({
+  id: '/alerts',
+  path: '/alerts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AiCommandRoute = AiCommandRouteImport.update({
   id: '/ai-command',
   path: '/ai-command',
@@ -62,6 +68,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai-command': typeof AiCommandRoute
+  '/alerts': typeof AlertsRoute
   '/incidents': typeof IncidentsRoute
   '/map': typeof MapRoute
   '/resources': typeof ResourcesRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai-command': typeof AiCommandRoute
+  '/alerts': typeof AlertsRoute
   '/incidents': typeof IncidentsRoute
   '/map': typeof MapRoute
   '/resources': typeof ResourcesRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ai-command': typeof AiCommandRoute
+  '/alerts': typeof AlertsRoute
   '/incidents': typeof IncidentsRoute
   '/map': typeof MapRoute
   '/resources': typeof ResourcesRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/ai-command'
+    | '/alerts'
     | '/incidents'
     | '/map'
     | '/resources'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/ai-command'
+    | '/alerts'
     | '/incidents'
     | '/map'
     | '/resources'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/ai-command'
+    | '/alerts'
     | '/incidents'
     | '/map'
     | '/resources'
@@ -126,6 +138,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AiCommandRoute: typeof AiCommandRoute
+  AlertsRoute: typeof AlertsRoute
   IncidentsRoute: typeof IncidentsRoute
   MapRoute: typeof MapRoute
   ResourcesRoute: typeof ResourcesRoute
@@ -178,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IncidentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/alerts': {
+      id: '/alerts'
+      path: '/alerts'
+      fullPath: '/alerts'
+      preLoaderRoute: typeof AlertsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ai-command': {
       id: '/ai-command'
       path: '/ai-command'
@@ -198,6 +218,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AiCommandRoute: AiCommandRoute,
+  AlertsRoute: AlertsRoute,
   IncidentsRoute: IncidentsRoute,
   MapRoute: MapRoute,
   ResourcesRoute: ResourcesRoute,
