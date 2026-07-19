@@ -13,6 +13,7 @@ import { Route as TeamsRouteImport } from './routes/teams'
 import { Route as SosRouteImport } from './routes/sos'
 import { Route as SheltersRouteImport } from './routes/shelters'
 import { Route as ResourcesRouteImport } from './routes/resources'
+import { Route as PublicRouteImport } from './routes/public'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as IncidentsRouteImport } from './routes/incidents'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
@@ -38,6 +39,11 @@ const SheltersRoute = SheltersRouteImport.update({
 const ResourcesRoute = ResourcesRouteImport.update({
   id: '/resources',
   path: '/resources',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PublicRoute = PublicRouteImport.update({
+  id: '/public',
+  path: '/public',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MapRoute = MapRouteImport.update({
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/analytics': typeof AnalyticsRoute
   '/incidents': typeof IncidentsRoute
   '/map': typeof MapRoute
+  '/public': typeof PublicRoute
   '/resources': typeof ResourcesRoute
   '/shelters': typeof SheltersRoute
   '/sos': typeof SosRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/analytics': typeof AnalyticsRoute
   '/incidents': typeof IncidentsRoute
   '/map': typeof MapRoute
+  '/public': typeof PublicRoute
   '/resources': typeof ResourcesRoute
   '/shelters': typeof SheltersRoute
   '/sos': typeof SosRoute
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/analytics': typeof AnalyticsRoute
   '/incidents': typeof IncidentsRoute
   '/map': typeof MapRoute
+  '/public': typeof PublicRoute
   '/resources': typeof ResourcesRoute
   '/shelters': typeof SheltersRoute
   '/sos': typeof SosRoute
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/incidents'
     | '/map'
+    | '/public'
     | '/resources'
     | '/shelters'
     | '/sos'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/incidents'
     | '/map'
+    | '/public'
     | '/resources'
     | '/shelters'
     | '/sos'
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/incidents'
     | '/map'
+    | '/public'
     | '/resources'
     | '/shelters'
     | '/sos'
@@ -154,6 +166,7 @@ export interface RootRouteChildren {
   AnalyticsRoute: typeof AnalyticsRoute
   IncidentsRoute: typeof IncidentsRoute
   MapRoute: typeof MapRoute
+  PublicRoute: typeof PublicRoute
   ResourcesRoute: typeof ResourcesRoute
   SheltersRoute: typeof SheltersRoute
   SosRoute: typeof SosRoute
@@ -188,6 +201,13 @@ declare module '@tanstack/react-router' {
       path: '/resources'
       fullPath: '/resources'
       preLoaderRoute: typeof ResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/public': {
+      id: '/public'
+      path: '/public'
+      fullPath: '/public'
+      preLoaderRoute: typeof PublicRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/map': {
@@ -242,6 +262,7 @@ const rootRouteChildren: RootRouteChildren = {
   AnalyticsRoute: AnalyticsRoute,
   IncidentsRoute: IncidentsRoute,
   MapRoute: MapRoute,
+  PublicRoute: PublicRoute,
   ResourcesRoute: ResourcesRoute,
   SheltersRoute: SheltersRoute,
   SosRoute: SosRoute,
