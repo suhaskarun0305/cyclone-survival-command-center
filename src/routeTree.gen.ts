@@ -9,9 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SosRouteImport } from './routes/sos'
 import { Route as AiCommandRouteImport } from './routes/ai-command'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SosRoute = SosRouteImport.update({
+  id: '/sos',
+  path: '/sos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AiCommandRoute = AiCommandRouteImport.update({
   id: '/ai-command',
   path: '/ai-command',
@@ -26,31 +32,42 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai-command': typeof AiCommandRoute
+  '/sos': typeof SosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai-command': typeof AiCommandRoute
+  '/sos': typeof SosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ai-command': typeof AiCommandRoute
+  '/sos': typeof SosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/ai-command'
+  fullPaths: '/' | '/ai-command' | '/sos'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ai-command'
-  id: '__root__' | '/' | '/ai-command'
+  to: '/' | '/ai-command' | '/sos'
+  id: '__root__' | '/' | '/ai-command' | '/sos'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AiCommandRoute: typeof AiCommandRoute
+  SosRoute: typeof SosRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sos': {
+      id: '/sos'
+      path: '/sos'
+      fullPath: '/sos'
+      preLoaderRoute: typeof SosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ai-command': {
       id: '/ai-command'
       path: '/ai-command'
@@ -71,6 +88,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AiCommandRoute: AiCommandRoute,
+  SosRoute: SosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
